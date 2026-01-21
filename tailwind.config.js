@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./app/**/*.{js,jsx,ts,tsx}', './src/**/*.{js,jsx,ts,tsx}'],
+  content: [
+    './app/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.{js,jsx,ts,tsx}',
+  ],
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
@@ -22,10 +25,10 @@ module.exports = {
         ring: 'var(--color-ring)',
       },
       fontFamily: {
-        inter: ['Inter-Regular'],
-        'inter-medium': ['Inter-Medium'],
-        'inter-semibold': ['Inter-SemiBold'],
-        'inter-bold': ['Inter-Bold'],
+        inter: 'Inter-Regular',
+        'inter-medium': 'Inter-Medium',
+        'inter-semibold': 'Inter-SemiBold',
+        'inter-bold': 'Inter-Bold',
       },
     },
   },

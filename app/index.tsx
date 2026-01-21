@@ -10,15 +10,15 @@ export default function HomeScreen() {
   return (
     <SafeAreaView className="flex-1 bg-background">
       <ScrollView
-        contentContainerClassName="flex-grow justify-center px-6 py-8"
+        className="flex-1"
         showsVerticalScrollIndicator={false}
       >
-        <View className="gap-6">
+        <View className="flex-grow justify-center px-6 py-8 gap-6">
           <View className="gap-2">
             <Text variant="h1" className="text-center">
               {STRINGS.HOME.WELCOME}
             </Text>
-            <Text variant="body">
+            <Text variant="body" className="text-center text-muted-foreground">
               {STRINGS.HOME.SUBTITLE}
             </Text>
           </View>
@@ -26,7 +26,7 @@ export default function HomeScreen() {
           <Card variant="default">
             <View className="gap-3">
               <Text variant="h3">Features</Text>
-              <Text variant="body">✓ NativeWind (Tailwind CSS)</Text>
+              <Text variant="caption">✓ NativeWind (Tailwind CSS)</Text>
               <Text variant="body">✓ Dark mode support</Text>
               <Text variant="body">✓ TypeScript strict mode</Text>
               <Text variant="body">✓ React Query + Zustand</Text>
@@ -35,7 +35,7 @@ export default function HomeScreen() {
             </View>
           </Card>
 
-          <Button variant="primary" size="md">
+          <Button variant="primary" size="lg">
             <Text className="text-primary-foreground font-inter-semibold">
               Get Started
             </Text>

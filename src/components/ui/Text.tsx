@@ -5,7 +5,7 @@ const textVariants = {
   h1: 'text-4xl font-inter-bold text-foreground',
   h2: 'text-3xl font-inter-bold text-foreground',
   h3: 'text-2xl font-inter-semibold text-foreground',
-  body: 'text-base font-inter text-foreground',
+  body: 'text-base font-inter-medium text-foreground',
   caption: 'text-sm font-inter text-muted-foreground',
 } as const;
 
