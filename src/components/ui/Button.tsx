@@ -2,28 +2,56 @@ import { Pressable, PressableProps } from 'react-native';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = {
-  base: 'rounded-lg flex-row items-center justify-center active:opacity-80',
+  base: 'rounded-lg flex-row items-center justify-center',
   variant: {
     primary: 'bg-primary',
     secondary: 'bg-secondary',
     outline: 'border-2 border-primary bg-transparent',
     ghost: 'bg-transparent',
     destructive: 'bg-destructive',
+    success: 'bg-green-600',
+    warning: 'bg-yellow-600',
   },
   size: {
-    sm: 'px-3 py-2',
-    md: 'px-4 py-3',
-    lg: 'px-6 py-4',
+    xs: 'px-2 py-1.5 min-h-[32px]',
+    sm: 'px-3 py-2 min-h-[36px]',
+    md: 'px-4 py-3 min-h-[44px]',
+    lg: 'px-6 py-4 min-h-[52px]',
+    xl: 'px-8 py-5 min-h-[60px]',
   },
+  disabled: 'opacity-disabled',
 } as const;
 
 export interface ButtonProps extends PressableProps {
+  /**
+   * Visual variant of the button
+   */
   variant?: keyof typeof buttonVariants.variant;
+  /**
+   * Size of the button
+   */
   size?: keyof typeof buttonVariants.size;
+  /**
+   * Additional styling via className
+   */
   className?: string;
+  /**
+   * Content to display in the button (compose Icon, Text, etc.)
+   */
   children: React.ReactNode;
 }
 
+/**
+ * Simple, composable Button component
+ *
+ * @example
+ * ```tsx
+ * <Button variant="primary" size="md" className="gap-2">
+ *   <Icon size={20}><CheckSvg /></Icon>
+ *   <Text variant="label">Save</Text>
+ * </Button>
+ * ```
+ */
 export function Button({
   variant = 'primary',
   size = 'md',
@@ -39,7 +67,7 @@ export function Button({
         buttonVariants.base,
         buttonVariants.variant[variant],
         buttonVariants.size[size],
-        disabled && 'opacity-50',
+        disabled && buttonVariants.disabled,
         className
       )}
       {...props}
