@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colors - Light Theme */
+  --color-primary: #3b82f6; /* blue-500 */
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #64748b; /* slate-500 */
+  --color-secondary-foreground: #ffffff;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a; /* slate-900 */
+  --color-muted: #f1f5f9; /* slate-100 */
+  --color-muted-foreground: #64748b; /* slate-500 */
+  --color-accent: #f59e0b; /* amber-500 */
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #ef4444; /* red-500 */
+  --color-destructive-foreground: #ffffff;
+  --color-border: #e2e8f0; /* slate-200 */
+  --color-input: #e2e8f0; /* slate-200 */
+  --color-ring: #3b82f6; /* blue-500 */
+}
+
+.dark {
+  --color-primary: #60a5fa; /* blue-400 */
+  --color-primary-foreground: #0f172a; /* slate-900 */
+  --color-secondary: #94a3b8; /* slate-400 */
+  --color-secondary-foreground: #0f172a; /* slate-900 */
+  --color-background: #0f172a; /* slate-900 */
+  --color-foreground: #f1f5f9; /* slate-100 */
+  --color-muted: #1e293b; /* slate-800 */
+  --color-muted-foreground: #94a3b8; /* slate-400 */
+  --color-accent: #fbbf24; /* amber-400 */
+  --color-accent-foreground: #0f172a; /* slate-900 */
+  --color-destructive: #f87171; /* red-400 */
+  --color-destructive-foreground: #0f172a; /* slate-900 */
+  --color-border: #334155; /* slate-700 */
+  --color-input: #334155; /* slate-700 */
+  --color-ring: #60a5fa; /* blue-400 */
+}
