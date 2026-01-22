@@ -1,130 +1,192 @@
-import { useMutation } from '@tanstack/react-query';
-import { authService } from '../services/authService';
-import { useAuthStore } from '../store/authStore';
-import type { LoginCredentials, RegisterCredentials } from '../types/auth.types';
+import { useUser, useSignIn, useSignUp, useAuth as useClerkAuth, useOAuth, useSignInWithApple } from '@clerk/clerk-expo';
+import { useCallback, useEffect } from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import * as Linking from 'expo-linking';
+import { ROUTES } from '@/constants/routes';
 
-/**
- * Hook to access auth state and actions
- *
- * @example
- * ```tsx
- * const { user, isLoggedIn, isLoading } = useAuth();
- * ```
- */
+WebBrowser.maybeCompleteAuthSession();
+
+export function useWarmUpBrowser() {
+  useEffect(() => {
+    void WebBrowser.warmUpAsync();
+    return () => {
+      void WebBrowser.coolDownAsync();
+    };
+  }, []);
+}
+
 export function useAuth() {
-  const user = useAuthStore((state) => state.user);
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const isLoading = useAuthStore((state) => state.isLoading);
-  const setAuth = useAuthStore((state) => state.setAuth);
-  const clearAuth = useAuthStore((state) => state.clearAuth);
-  const setUser = useAuthStore((state) => state.setUser);
-  const getTokens = useAuthStore((state) => state.getTokens);
+  const { user, isSignedIn, isLoaded } = useUser();
+  const { signOut, getToken } = useClerkAuth();
 
   return {
     user,
-    isLoggedIn,
-    isLoading,
-    setAuth,
-    clearAuth,
-    setUser,
-    getTokens,
+    isSignedIn,
+    isLoaded,
+    signOut,
+    getToken,
   };
 }
 
-/**
- * React Query mutation hook for user login
- *
- * @example
- * ```tsx
- * const { mutate: login, isPending } = useLogin();
- *
- * const handleLogin = (data: LoginFormData) => {
- *   login(data, {
- *     onSuccess: () => {
- *       router.push('/home');
- *     },
- *     onError: (error) => {
- *       Alert.alert('Login Failed', error.message);
- *     },
- *   });
- * };
- * ```
- */
 export function useLogin() {
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const { signIn, setActive, isLoaded } = useSignIn();
 
-  return useMutation({
-    mutationFn: (credentials: LoginCredentials) => authService.login(credentials),
-    onSuccess: async (data) => {
-      // Store user and tokens in auth store
-      await setAuth(data.user, data.tokens);
-    },
-  });
+  const handleSignIn = async (params: { identifier: string; password: string }) => {
+    if (!isLoaded) return;
+
+    const result = await signIn.create({
+      identifier: params.identifier,
+      password: params.password,
+    });
+
+    if (result.status === 'complete') {
+      await setActive({ session: result.createdSessionId });
+      return result;
+    }
+
+    throw new Error('Sign in incomplete');
+  };
+
+  return {
+    signIn: handleSignIn,
+    isLoading: !isLoaded,
+  };
 }
 
-/**
- * React Query mutation hook for user registration
- *
- * @example
- * ```tsx
- * const { mutate: register, isPending } = useRegister();
- *
- * const handleRegister = (data: RegisterFormData) => {
- *   register(
- *     {
- *       email: data.email,
- *       password: data.password,
- *       name: data.name,
- *     },
- *     {
- *       onSuccess: () => {
- *         router.push('/home');
- *       },
- *       onError: (error) => {
- *         Alert.alert('Registration Failed', error.message);
- *       },
- *     }
- *   );
- * };
- * ```
- */
 export function useRegister() {
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const { signUp, setActive, isLoaded } = useSignUp();
 
-  return useMutation({
-    mutationFn: (credentials: RegisterCredentials) =>
-      authService.register(credentials),
-    onSuccess: async (data) => {
-      // Store user and tokens in auth store
-      await setAuth(data.user, data.tokens);
-    },
-  });
+  const handleSignUp = async (params: {
+    emailAddress: string;
+    password: string;
+    firstName?: string;
+    lastName?: string;
+  }) => {
+    if (!isLoaded) return;
+
+    const result = await signUp.create(params);
+
+    // If email verification is required
+    if (result.status === 'missing_requirements') {
+      // Prepare email verification
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+      return result;
+    }
+
+    // If sign up is complete
+    if (result.status === 'complete') {
+      await setActive({ session: result.createdSessionId });
+      return result;
+    }
+
+    return result;
+  };
+
+  return {
+    signUp: handleSignUp,
+    isLoading: !isLoaded,
+  };
 }
 
-/**
- * React Query mutation hook for user logout
- *
- * @example
- * ```tsx
- * const { mutate: logout, isPending } = useLogout();
- *
- * const handleLogout = () => {
- *   logout(undefined, {
- *     onSuccess: () => {
- *       router.push('/login');
- *     },
- *   });
- * };
- * ```
- */
-export function useLogout() {
-  const clearAuth = useAuthStore((state) => state.clearAuth);
+export function useVerifyEmail() {
+  const { signUp, setActive, isLoaded } = useSignUp();
 
-  return useMutation({
-    mutationFn: () => authService.logout(),
-    onSuccess: async () => {
-      // Clear auth state and tokens
-      await clearAuth();
-    },
-  });
+  const verifyEmail = async (code: string) => {
+    if (!isLoaded) return;
+
+    const result = await signUp.attemptEmailAddressVerification({ code });
+
+    if (result.status === 'complete') {
+      await setActive({ session: result.createdSessionId });
+      return result;
+    }
+
+    throw new Error('Verification incomplete');
+  };
+
+  return {
+    verifyEmail,
+    isLoading: !isLoaded,
+  };
+}
+
+export function useForgotPassword() {
+  const { signIn, isLoaded } = useSignIn();
+
+  const sendResetCode = async (emailAddress: string) => {
+    if (!isLoaded) return;
+
+    const result = await signIn.create({
+      strategy: 'reset_password_email_code',
+      identifier: emailAddress,
+    });
+
+    return result;
+  };
+
+  return {
+    sendResetCode,
+    isLoading: !isLoaded,
+  };
+}
+
+export function useResetPassword() {
+  const { signIn, setActive, isLoaded } = useSignIn();
+
+  const resetPassword = async (code: string, newPassword: string) => {
+    if (!isLoaded) return;
+
+    const result = await signIn.attemptFirstFactor({
+      strategy: 'reset_password_email_code',
+      code,
+      password: newPassword,
+    });
+
+    if (result.status === 'complete') {
+      await setActive({ session: result.createdSessionId });
+      return result;
+    }
+
+    throw new Error('Reset incomplete');
+  };
+
+  return {
+    resetPassword,
+    isLoading: !isLoaded,
+  };
+}
+
+export function useGoogleOAuth() {
+  useWarmUpBrowser();
+  const { startOAuthFlow } = useOAuth({ strategy: 'oauth_google' });
+
+  const signInWithGoogle = useCallback(async () => {
+    const { createdSessionId, setActive } = await startOAuthFlow({
+      redirectUrl: Linking.createURL(ROUTES.AUTH.LOGIN),
+    });
+
+    if (createdSessionId && setActive) {
+      await setActive({ session: createdSessionId });
+    }
+  }, [startOAuthFlow]);
+
+  return {
+    signInWithGoogle,
+  };
+}
+
+export function useAppleOAuth() {
+  const { startAppleAuthenticationFlow } = useSignInWithApple();
+
+  const signInWithApple = useCallback(async () => {
+    const { createdSessionId, setActive } = await startAppleAuthenticationFlow();
+
+    if (createdSessionId && setActive) {
+      await setActive({ session: createdSessionId });
+    }
+  }, [startAppleAuthenticationFlow]);
+
+  return {
+    signInWithApple,
+  };
 }

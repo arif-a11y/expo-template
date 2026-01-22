@@ -330,7 +330,6 @@ const { data: isAvailable } = useQuery({
 - ❌ Don't use `watch()` for entire form
 - ❌ Don't hardcode validation messages
 - ❌ Don't store form state in Zustand
-- ❌ Don't forget accessibility labels
 - ❌ Don't validate on every keystroke
 - ❌ Don't mix controlled/uncontrolled inputs
 

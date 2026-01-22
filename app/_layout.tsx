@@ -3,8 +3,10 @@ import { useEffect } from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { ClerkProvider } from "@clerk/clerk-expo";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
+import { ENV } from "@/config/env";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,14 +29,16 @@ export default function RootLayout() {
   }
 
   return (
-    <QueryProvider>
-      <ThemeProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        />
-      </ThemeProvider>
-    </QueryProvider>
+    <ClerkProvider publishableKey={ENV.CLERK_PUBLISHABLE_KEY}>
+      <QueryProvider>
+        <ThemeProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          />
+        </ThemeProvider>
+      </QueryProvider>
+    </ClerkProvider>
   );
 }

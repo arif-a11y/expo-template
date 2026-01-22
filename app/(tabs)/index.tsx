@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, Card, Button, LinkItem, Input } from "@/components/ui";
+import { Text, Card, Button, Input } from "@/components/ui";
 import {
   Modal,
   BottomSheet,
@@ -25,9 +25,6 @@ export default function HomeScreen() {
           <View className="gap-2">
             <Text variant="h1" className="text-center">
               {STRINGS.HOME.WELCOME}
-            </Text>
-            <Text variant="body" className="text-center text-muted-foreground">
-              Component Showcase
             </Text>
           </View>
 
@@ -67,17 +64,6 @@ export default function HomeScreen() {
                 state="success"
                 placeholder="Success state"
               />
-            </View>
-          </Card>
-
-          {/* LinkItem */}
-          <Card variant="default">
-            <View>
-              <LinkItem onPress={() => console.log("Settings pressed")}>
-                <Text variant="body" color="primary">
-                  Settings
-                </Text>
-              </LinkItem>
             </View>
           </Card>
 

@@ -1,6 +1,13 @@
 export const ROUTES = {
   HOME: '/',
-  // Add more routes as needed
-  // PROFILE: '/profile',
-  // SETTINGS: '/settings',
+  AUTH: {
+    LOGIN: '/(auth)/login',
+    REGISTER: '/(auth)/register',
+    FORGOT_PASSWORD: '/(auth)/forgot-password',
+    RESET_PASSWORD: '/(auth)/reset-password',
+    VERIFY_EMAIL: '/(auth)/verify-email',
+  },
+  TABS: {
+    HOME: '/(tabs)',
+  },
 } as const;

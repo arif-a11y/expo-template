@@ -427,7 +427,7 @@ export function ResponsiveGrid() {
 
 ---
 
-## Font Scaling & Accessibility
+## Fonts
 
 ### Respecting User Font Size Preferences
 
@@ -454,7 +454,6 @@ interface TextProps extends RNTextProps {
 export function Text({ variant = 'body', className, ...props }: TextProps) {
   return (
     <RNText
-      maxFontSizeMultiplier={1.3}
       className={cn(textVariants.variant[variant], className)}
       {...props}
     />

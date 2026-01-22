@@ -1,7 +1,5 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig, AxiosError } from 'axios';
 import { ENV } from '@/config/env';
-import { secureStorage } from '@/services/storage/secureStorage';
-import { STORAGE_KEYS } from '@/constants';
 
 export const apiClient = axios.create({
   baseURL: ENV.API_URL,
@@ -11,26 +9,26 @@ export const apiClient = axios.create({
   },
 });
 
+let clerkGetToken: (() => Promise<string | null>) | null = null;
+
+export function setClerkTokenGetter(getter: () => Promise<string | null>) {
+  clerkGetToken = getter;
+}
+
 apiClient.interceptors.request.use(
-  async (config) => {
-    const token = await secureStorage.get(STORAGE_KEYS.SECURE.AUTH_TOKEN);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+  async (config: InternalAxiosRequestConfig) => {
+    if (clerkGetToken) {
+      const token = await clerkGetToken();
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error: AxiosError) => Promise.reject(error)
 );
 
 apiClient.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    if (error.response?.status === 401) {
-      await secureStorage.delete(STORAGE_KEYS.SECURE.AUTH_TOKEN);
-      await secureStorage.delete(STORAGE_KEYS.SECURE.REFRESH_TOKEN);
-    }
-    return Promise.reject(error);
-  }
+  (error: AxiosError) => Promise.reject(error)
 );

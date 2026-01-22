@@ -1,4 +1,5 @@
 import { TextInput, TextInputProps } from 'react-native';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const inputVariants = {
@@ -13,6 +14,7 @@ const inputVariants = {
     error: 'border-destructive',
     success: 'border-green-600',
     disabled: 'opacity-50 bg-muted',
+    focused: 'border-primary',
   },
 } as const;
 
@@ -41,15 +43,32 @@ export function Input({
   state,
   className,
   editable,
+  onFocus,
+  onBlur,
   ...props
 }: InputProps) {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = (e: any) => {
+    setIsFocused(true);
+    onFocus?.(e);
+  };
+
+  const handleBlur = (e: any) => {
+    setIsFocused(false);
+    onBlur?.(e);
+  };
+
   return (
     <TextInput
       editable={editable}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       className={cn(
         inputVariants.base,
         inputVariants.variant[variant],
         state && inputVariants.state[state],
+        isFocused && !state && inputVariants.state.focused,
         !editable && inputVariants.state.disabled,
         className
       )}

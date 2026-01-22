@@ -436,4 +436,4 @@ export function LazyImage({ source }: { source: string }) {
 - ❌ Don't use custom fonts excessively (increases bundle size)
 - ❌ Don't skip @2x/@3x variants (blurry on high-res devices)
 - ❌ Don't load all images upfront (lazy load when possible)
-- ❌ Don't ignore maxFontSizeMultiplier for accessibility
+
