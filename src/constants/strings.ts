@@ -23,25 +23,21 @@ export const STRINGS = {
     SUBTITLE: 'A production-ready template with best practices',
   },
   AUTH: {
-    // Form labels
     EMAIL: 'Email',
     PASSWORD: 'Password',
     CONFIRM_PASSWORD: 'Confirm Password',
     NAME: 'Name',
 
-    // Buttons
     LOGIN: 'Log In',
     REGISTER: 'Sign Up',
     LOGOUT: 'Log Out',
     FORGOT_PASSWORD: 'Forgot Password?',
 
-    // Messages
     WELCOME_BACK: 'Welcome back',
     CREATE_ACCOUNT: 'Create your account',
     ALREADY_HAVE_ACCOUNT: 'Already have an account?',
     DONT_HAVE_ACCOUNT: "Don't have an account?",
 
-    // Validation errors
     EMAIL_REQUIRED: 'Email is required',
     EMAIL_INVALID: 'Please enter a valid email address',
     PASSWORD_REQUIRED: 'Password is required',

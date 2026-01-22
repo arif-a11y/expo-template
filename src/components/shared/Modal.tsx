@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import {
   Modal as RNModal,
   ModalProps as RNModalProps,
   Pressable,
-} from 'react-native';
-import { cn } from '@/lib/utils';
+} from "react-native";
+import { cn } from "@/lib/utils";
 
 /**
  * Composable Modal component
@@ -26,8 +26,8 @@ import { cn } from '@/lib/utils';
  */
 
 const modalVariants = {
-  overlay: 'flex-1 bg-black/50 items-center justify-center',
-  content: 'w-11/12 max-w-md',
+  overlay: "flex-1 bg-black/50 items-center justify-center",
+  content: "w-11/12 max-w-md",
 } as const;
 
 export interface ModalProps extends RNModalProps {

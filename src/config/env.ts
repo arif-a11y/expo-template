@@ -1,15 +1,12 @@
 import Constants from 'expo-constants';
 
 interface EnvConfig {
-  // API
   API_URL: string;
   API_TIMEOUT: number;
 
-  // Feature flags
   ENABLE_ANALYTICS: boolean;
   ENABLE_PUSH_NOTIFICATIONS: boolean;
 
-  // App
   APP_VERSION: string;
   ENVIRONMENT: 'development' | 'staging' | 'production';
 }

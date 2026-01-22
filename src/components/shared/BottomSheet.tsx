@@ -1,12 +1,6 @@
-import React from 'react';
-import {
-  Modal,
-  ModalProps,
-  View,
-  Pressable,
-} from 'react-native';
-import { cn } from '@/lib/utils';
-
+import React from "react";
+import { Modal, ModalProps, View, Pressable } from "react-native";
+import { cn } from "@/lib/utils";
 
 /**
  * Composable BottomSheet component
@@ -30,9 +24,9 @@ import { cn } from '@/lib/utils';
  */
 
 const bottomSheetVariants = {
-  overlay: 'flex-1 bg-black/50 justify-end',
-  content: 'bg-background rounded-t-3xl',
-  handle: 'w-12 h-1 bg-muted-foreground/30 rounded-full mx-auto mt-3',
+  overlay: "flex-1 bg-black/50 justify-end",
+  content: "bg-background rounded-t-3xl",
+  handle: "w-12 h-1 bg-muted-foreground/30 rounded-full mx-auto mt-3",
 } as const;
 
 export interface BottomSheetProps extends ModalProps {
@@ -67,9 +61,7 @@ export function BottomSheet({
         className={cn(bottomSheetVariants.overlay, overlayClassName)}
         onPress={closeOnOverlayPress ? onClose : undefined}
       >
-        <Pressable
-          onPress={(e) => e.stopPropagation()}
-        >
+        <Pressable onPress={(e) => e.stopPropagation()}>
           <View className={cn(bottomSheetVariants.content, contentClassName)}>
             {showHandle && <View className={bottomSheetVariants.handle} />}
             {children}

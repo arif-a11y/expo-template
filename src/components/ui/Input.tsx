@@ -17,17 +17,8 @@ const inputVariants = {
 } as const;
 
 export interface InputProps extends TextInputProps {
-  /**
-   * Visual variant of the input
-   */
   variant?: keyof typeof inputVariants.variant;
-  /**
-   * State of the input (error, success)
-   */
   state?: keyof typeof inputVariants.state;
-  /**
-   * Additional styling via className
-   */
   className?: string;
 }
 

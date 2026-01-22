@@ -1,5 +1,4 @@
 export const STORAGE_KEYS = {
-  // Secure storage (encrypted) - Use expo-secure-store for these
   SECURE: {
     AUTH_TOKEN: 'auth_token',
     REFRESH_TOKEN: 'refresh_token',
@@ -7,7 +6,6 @@ export const STORAGE_KEYS = {
     API_KEY: 'api_key',
   },
 
-  // Regular storage (AsyncStorage) - Non-sensitive data
   REGULAR: {
     USER_PREFERENCES: 'user_preferences',
     THEME: 'app_theme',

@@ -29,14 +29,10 @@ const accordionVariants = {
   root: "border-b border-border",
 } as const;
 
-export interface AccordionProps
-  extends Omit<ViewProps, "children"> {
+export interface AccordionProps extends Omit<ViewProps, "children"> {
   defaultOpen?: boolean;
   className?: string;
-  children: (props: {
-    isOpen: boolean;
-    toggle: () => void;
-  }) => React.ReactNode;
+  children: (props: { isOpen: boolean; toggle: () => void }) => React.ReactNode;
 }
 
 export function Accordion({
@@ -47,13 +43,10 @@ export function Accordion({
 }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
-  const toggle = () => setIsOpen(prev => !prev);
+  const toggle = () => setIsOpen((prev) => !prev);
 
   return (
-    <View
-      className={cn(accordionVariants.root, className)}
-      {...props}
-    >
+    <View className={cn(accordionVariants.root, className)} {...props}>
       {children({ isOpen, toggle })}
     </View>
   );

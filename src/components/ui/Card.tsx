@@ -1,12 +1,12 @@
-import { View, ViewProps } from 'react-native';
-import { cn } from '@/lib/utils';
+import { View, ViewProps } from "react-native";
+import { cn } from "@/lib/utils";
 
 const cardVariants = {
-  base: 'rounded-lg p-4',
+  base: "rounded-lg p-4",
   variant: {
-    default: 'bg-background border border-border shadow-md',
-    outline: 'border-2 border-primary bg-transparent',
-    ghost: 'bg-transparent',
+    default: "bg-background border border-border shadow-md",
+    outline: "border-2 border-primary bg-transparent",
+    ghost: "bg-transparent",
   },
 } as const;
 
@@ -17,14 +17,18 @@ export interface CardProps extends ViewProps {
 }
 
 export function Card({
-  variant = 'default',
+  variant = "default",
   className,
   children,
   ...props
 }: CardProps) {
   return (
     <View
-      className={cn(cardVariants.base, cardVariants.variant[variant], className)}
+      className={cn(
+        cardVariants.base,
+        cardVariants.variant[variant],
+        className,
+      )}
       {...props}
     >
       {children}
