@@ -23,7 +23,6 @@ export default function HomeScreen() {
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [checkboxChecked, setCheckboxChecked] = useState(false);
 
   return (
     <SafeAreaView className="flex-1 bg-background">

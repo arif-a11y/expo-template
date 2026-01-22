@@ -1,24 +1,6 @@
-import React from 'react';
-import {
-  Modal,
-  ModalProps,
-  View,
-  Pressable,
-} from 'react-native';
-import { cn } from '@/lib/utils';
-
-const alertDialogVariants = {
-  overlay: 'flex-1 bg-black/60 items-center justify-center',
-  content: 'bg-background rounded-2xl w-11/12 max-w-sm',
-} as const;
-
-export interface AlertDialogProps extends ModalProps {
-  visible: boolean;
-  onClose?: () => void;
-  children: React.ReactNode;
-  overlayClassName?: string;
-  contentClassName?: string;
-}
+import React from "react";
+import { Modal, ModalProps, View, Pressable } from "react-native";
+import { cn } from "@/lib/utils";
 
 /**
  * Composable AlertDialog component
@@ -49,6 +31,19 @@ export interface AlertDialogProps extends ModalProps {
  * </AlertDialog>
  * ```
  */
+const alertDialogVariants = {
+  overlay: "flex-1 bg-black/60 items-center justify-center",
+  content: "bg-background rounded-2xl w-11/12 max-w-sm",
+} as const;
+
+export interface AlertDialogProps extends ModalProps {
+  visible: boolean;
+  onClose?: () => void;
+  children: React.ReactNode;
+  overlayClassName?: string;
+  contentClassName?: string;
+}
+
 export function AlertDialog({
   visible,
   onClose,
@@ -66,9 +61,7 @@ export function AlertDialog({
       {...props}
     >
       <View className={cn(alertDialogVariants.overlay, overlayClassName)}>
-        <Pressable
-          onPress={(e) => e.stopPropagation()}
-        >
+        <Pressable onPress={(e) => e.stopPropagation()}>
           <View className={cn(alertDialogVariants.content, contentClassName)}>
             {children}
           </View>

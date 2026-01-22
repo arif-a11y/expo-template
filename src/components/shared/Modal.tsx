@@ -6,20 +6,6 @@ import {
 } from 'react-native';
 import { cn } from '@/lib/utils';
 
-const modalVariants = {
-  overlay: 'flex-1 bg-black/50 items-center justify-center',
-  content: 'w-11/12 max-w-md',
-} as const;
-
-export interface ModalProps extends RNModalProps {
-  visible: boolean;
-  onClose?: () => void;
-  children: React.ReactNode;
-  overlayClassName?: string;
-  contentClassName?: string;
-  closeOnOverlayPress?: boolean;
-}
-
 /**
  * Composable Modal component
  *
@@ -38,6 +24,21 @@ export interface ModalProps extends RNModalProps {
  * </Modal>
  * ```
  */
+
+const modalVariants = {
+  overlay: 'flex-1 bg-black/50 items-center justify-center',
+  content: 'w-11/12 max-w-md',
+} as const;
+
+export interface ModalProps extends RNModalProps {
+  visible: boolean;
+  onClose?: () => void;
+  children: React.ReactNode;
+  overlayClassName?: string;
+  contentClassName?: string;
+  closeOnOverlayPress?: boolean;
+}
+
 export function Modal({
   visible,
   onClose,

@@ -1,11 +1,11 @@
 export const API_ENDPOINTS = {
-  // Example: AUTH
-  // AUTH: {
-  //   LOGIN: '/auth/login',
-  //   REGISTER: '/auth/register',
-  //   REFRESH: '/auth/refresh',
-  //   LOGOUT: '/auth/logout',
-  // },
+  AUTH: {
+    LOGIN: '/auth/login',
+    REGISTER: '/auth/register',
+    REFRESH: '/auth/refresh',
+    LOGOUT: '/auth/logout',
+    ME: '/auth/me',
+  },
 
   // Example: USERS
   // USERS: {

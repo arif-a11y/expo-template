@@ -16,9 +16,40 @@ export const STRINGS = {
     GENERIC: 'Something went wrong. Please try again.',
     INVALID_EMAIL: 'Please enter a valid email address',
     PASSWORD_MIN_LENGTH: 'Password must be at least 8 characters',
+    REQUIRED_FIELD: 'This field is required',
   },
   HOME: {
     WELCOME: 'Welcome to Expo Template',
     SUBTITLE: 'A production-ready template with best practices',
+  },
+  AUTH: {
+    // Form labels
+    EMAIL: 'Email',
+    PASSWORD: 'Password',
+    CONFIRM_PASSWORD: 'Confirm Password',
+    NAME: 'Name',
+
+    // Buttons
+    LOGIN: 'Log In',
+    REGISTER: 'Sign Up',
+    LOGOUT: 'Log Out',
+    FORGOT_PASSWORD: 'Forgot Password?',
+
+    // Messages
+    WELCOME_BACK: 'Welcome back',
+    CREATE_ACCOUNT: 'Create your account',
+    ALREADY_HAVE_ACCOUNT: 'Already have an account?',
+    DONT_HAVE_ACCOUNT: "Don't have an account?",
+
+    // Validation errors
+    EMAIL_REQUIRED: 'Email is required',
+    EMAIL_INVALID: 'Please enter a valid email address',
+    PASSWORD_REQUIRED: 'Password is required',
+    PASSWORD_MIN_LENGTH: 'Password must be at least 8 characters',
+    PASSWORD_WEAK: 'Password must contain uppercase, lowercase, and number',
+    PASSWORD_CONFIRM_REQUIRED: 'Please confirm your password',
+    PASSWORD_MISMATCH: 'Passwords do not match',
+    NAME_REQUIRED: 'Name is required',
+    NAME_MIN_LENGTH: 'Name must be at least 2 characters',
   },
 } as const;

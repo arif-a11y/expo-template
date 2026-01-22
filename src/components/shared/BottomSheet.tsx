@@ -7,21 +7,6 @@ import {
 } from 'react-native';
 import { cn } from '@/lib/utils';
 
-const bottomSheetVariants = {
-  overlay: 'flex-1 bg-black/50 justify-end',
-  content: 'bg-background rounded-t-3xl',
-  handle: 'w-12 h-1 bg-muted-foreground/30 rounded-full mx-auto mt-3',
-} as const;
-
-export interface BottomSheetProps extends ModalProps {
-  visible: boolean;
-  onClose?: () => void;
-  children: React.ReactNode;
-  overlayClassName?: string;
-  contentClassName?: string;
-  showHandle?: boolean;
-  closeOnOverlayPress?: boolean;
-}
 
 /**
  * Composable BottomSheet component
@@ -43,6 +28,23 @@ export interface BottomSheetProps extends ModalProps {
  * </BottomSheet>
  * ```
  */
+
+const bottomSheetVariants = {
+  overlay: 'flex-1 bg-black/50 justify-end',
+  content: 'bg-background rounded-t-3xl',
+  handle: 'w-12 h-1 bg-muted-foreground/30 rounded-full mx-auto mt-3',
+} as const;
+
+export interface BottomSheetProps extends ModalProps {
+  visible: boolean;
+  onClose?: () => void;
+  children: React.ReactNode;
+  overlayClassName?: string;
+  contentClassName?: string;
+  showHandle?: boolean;
+  closeOnOverlayPress?: boolean;
+}
+
 export function BottomSheet({
   visible,
   onClose,
