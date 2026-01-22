@@ -1,10 +1,6 @@
 import { z } from 'zod';
 import { STRINGS } from '@/constants';
 
-/**
- * Zod validation schemas for auth forms
- */
-
 export const loginSchema = z.object({
   email: z
     .string()

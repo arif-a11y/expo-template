@@ -2,10 +2,6 @@ import { useState, useEffect } from 'react';
 import { Dimensions, Platform, ScaledSize } from 'react-native';
 import { breakpoints } from '@/lib/responsive';
 
-/**
- * Hook for responsive design that updates on dimension changes
- * @returns Object containing width, height, isPhone, isTablet
- */
 export function useResponsive() {
   const [dimensions, setDimensions] = useState<ScaledSize>(
     Dimensions.get('window')

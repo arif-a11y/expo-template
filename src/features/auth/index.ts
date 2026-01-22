@@ -11,7 +11,6 @@ export { useAuth, useLogin, useRegister, useLogout } from './hooks/useAuth';
 // Store
 export { useAuthStore } from './store/authStore';
 
-// Types
 export type {
   User,
   AuthTokens,
@@ -21,6 +20,5 @@ export type {
   RegisterResponse,
 } from './types/auth.types';
 
-// Schemas (for form validation in screens)
 export { loginSchema, registerSchema } from './schemas/auth.schema';
 export type { LoginFormData, RegisterFormData } from './schemas/auth.schema';

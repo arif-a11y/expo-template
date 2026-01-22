@@ -1,7 +1,3 @@
-/**
- * API-related types
- */
-
 export interface ApiResponse<T> {
   data: T;
   message?: string;
