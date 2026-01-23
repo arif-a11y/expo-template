@@ -1,3 +1,4 @@
+import { SocialAuth } from '@/features/auth/components';
 /**
  * Auth feature public API - Clerk Integration
  *
@@ -40,5 +41,4 @@ export { RegisterForm } from './components/RegisterForm';
 export { ForgotPasswordForm } from './components/ForgotPasswordForm';
 export { ResetPasswordForm } from './components/ResetPasswordForm';
 export { VerifyEmailForm } from './components/VerifyEmailForm';
-export { SocialSignInButtons } from './components/SocialSignInButtons';
-export { FormInput } from './components/FormInput';
+export { SocialAuth} from './components/SocialAuth';

@@ -1,17 +1,16 @@
 import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSignUp } from '@clerk/clerk-expo';
 import { Text } from '@/components/ui/Text';
 import { Button } from '@/components/ui/Button';
-import { Loader } from '@/components/ui/Loader';
-import { FormField } from '@/features/auth/components';
+import { FormField } from './FormField';
 import { verifyEmailSchema, VerifyEmailFormData } from '../schemas/auth.schema';
+import { useVerifyEmail } from '../hooks/useAuth';
 import { STRINGS } from '@/constants';
 
 export function VerifyEmailForm() {
-  const { signUp, setActive, isLoaded } = useSignUp();
-  const { control, handleSubmit, setError, formState: { isSubmitting, errors } } = useForm<VerifyEmailFormData>({
+  const { verifyEmail, isLoaded } = useVerifyEmail();
+  const { control, handleSubmit, setError, formState: { errors } } = useForm<VerifyEmailFormData>({
     resolver: zodResolver(verifyEmailSchema),
     defaultValues: {
       code: '',
@@ -20,14 +19,10 @@ export function VerifyEmailForm() {
 
   const onSubmit = async (data: VerifyEmailFormData) => {
     try {
-      const result = await signUp!.attemptEmailAddressVerification({ code: data.code });
-
-      if (result.status === 'complete') {
-        await setActive!({ session: result.createdSessionId });
-      }
+      await verifyEmail(data.code);
     } catch (err: any) {
       setError('root', {
-        message: err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || 'Invalid verification code',
+        message: err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || STRINGS.ERRORS.VERIFICATION_FAILED,
       });
     }
   };
@@ -48,7 +43,7 @@ export function VerifyEmailForm() {
           control={control}
           name="code"
           label={STRINGS.AUTH.VERIFICATION_CODE}
-          placeholder="Enter 6-digit code"
+          placeholder={STRINGS.AUTH.PLACEHOLDER_CODE}
           keyboardType="number-pad"
           autoCapitalize="none"
         />
@@ -66,15 +61,11 @@ export function VerifyEmailForm() {
         variant="primary"
         size="lg"
         onPress={handleSubmit(onSubmit)}
-        disabled={!isLoaded || isSubmitting}
+        disabled={!isLoaded}
       >
-        {isSubmitting ? (
-          <Loader size="sm" />
-        ) : (
-          <Text className="text-primary-foreground font-inter-semibold">
-            {STRINGS.AUTH.VERIFY}
-          </Text>
-        )}
+        <Text className="text-primary-foreground font-inter-semibold">
+          {STRINGS.AUTH.VERIFY}
+        </Text>
       </Button>
     </View>
   );

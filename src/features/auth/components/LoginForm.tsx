@@ -2,19 +2,19 @@ import { View, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSignIn } from '@clerk/clerk-expo';
 import { Text } from '@/components/ui/Text';
 import { Button } from '@/components/ui/Button';
-import { Loader } from '@/components/ui/Loader';
-import { FormField, SocialSignInButtons } from '@/features/auth/components';
+import { FormField } from './FormField';
+import { SocialAuth } from './SocialAuth';
 import { loginSchema, LoginFormData } from '../schemas/auth.schema';
+import { useLogin } from '../hooks/useAuth';
 import { STRINGS } from '@/constants';
 import { ROUTES } from '@/constants/routes';
 import { Email } from '@assets/icons';
 
 export function LoginForm() {
-  const { signIn, setActive, isLoaded } = useSignIn();
-  const { control, handleSubmit, setError, formState: { isSubmitting, errors } } = useForm<LoginFormData>({
+  const { signIn, isLoaded } = useLogin();
+  const { control, handleSubmit, setError, formState: { errors } } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -24,17 +24,13 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const result = await signIn!.create({
+      await signIn({
         identifier: data.email,
         password: data.password,
       });
-
-      if (result.status === 'complete') {
-        await setActive!({ session: result.createdSessionId });
-      }
     } catch (err: any) {
       setError('root', {
-        message: err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || 'Failed to sign in',
+        message: err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || STRINGS.ERRORS.SIGN_IN_FAILED,
       });
     }
   };
@@ -46,7 +42,7 @@ export function LoginForm() {
           {STRINGS.AUTH.WELCOME_BACK}
         </Text>
         <Text variant="body" className="text-muted-foreground">
-          Sign in to continue
+          {STRINGS.AUTH.SIGN_IN_SUBTITLE}
         </Text>
       </View>
 
@@ -55,7 +51,7 @@ export function LoginForm() {
           control={control}
           name="email"
           label={STRINGS.AUTH.EMAIL}
-          placeholder="you@example.com"
+          placeholder={STRINGS.AUTH.PLACEHOLDER_EMAIL}
           keyboardType="email-address"
           autoCapitalize="none"
           autoComplete="email"
@@ -66,7 +62,7 @@ export function LoginForm() {
           control={control}
           name="password"
           label={STRINGS.AUTH.PASSWORD}
-          placeholder="Enter your password"
+          placeholder={STRINGS.AUTH.PLACEHOLDER_PASSWORD}
           autoCapitalize="none"
           autoComplete="password"
           isPassword
@@ -94,15 +90,11 @@ export function LoginForm() {
           variant="primary"
           size="lg"
           onPress={handleSubmit(onSubmit)}
-          disabled={!isLoaded || isSubmitting}
+          disabled={!isLoaded}
         >
-          {isSubmitting ? (
-            <Loader size="sm" />
-          ) : (
-            <Text className="text-primary-foreground font-inter-semibold">
-              {STRINGS.AUTH.LOGIN}
-            </Text>
-          )}
+          <Text className="text-primary-foreground font-inter-semibold">
+            {STRINGS.AUTH.LOGIN}
+          </Text>
         </Button>
 
         <View className="gap-3">
@@ -114,7 +106,7 @@ export function LoginForm() {
             <View className="flex-1 h-px bg-border" />
           </View>
 
-          <SocialSignInButtons disabled={!isLoaded || isSubmitting} />
+          <SocialAuth disabled={!isLoaded} />
         </View>
       </View>
 

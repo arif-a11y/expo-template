@@ -1,5 +1,5 @@
 export { FormField } from './FormField';
-export { SocialSignInButtons } from './SocialSignInButtons';
+export { SocialAuth } from "./SocialAuth";
 export { LoginForm } from './LoginForm';
 export { RegisterForm } from './RegisterForm';
 export { ForgotPasswordForm } from './ForgotPasswordForm';

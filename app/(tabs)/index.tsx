@@ -9,10 +9,8 @@ import {
   Accordion,
 } from "@/components/shared";
 import { STRINGS } from "@/constants/strings";
-import { useResponsive } from "@/hooks/useResponsive";
 
 export default function HomeScreen() {
-  const { isTablet } = useResponsive();
   const [modalOpen, setModalOpen] = useState(false);
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
@@ -146,9 +144,6 @@ export default function HomeScreen() {
             <View className="gap-3">
               <Text variant="h3">Features</Text>
               <Text variant="body">✓ TypeScript support</Text>
-              <Text variant="body">
-                ✓ {isTablet ? "Tablet" : "Phone"} detected
-              </Text>
             </View>
           </Card>
         </View>

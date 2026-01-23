@@ -13,11 +13,11 @@ const socialButtonVariants = {
   },
 } as const;
 
-interface SocialSignInButtonsProps {
+interface SocialAuthProps {
   disabled?: boolean;
 }
 
-export function SocialSignInButtons({ disabled }: SocialSignInButtonsProps) {
+export function SocialAuth({ disabled }: SocialAuthProps) {
   const { signInWithGoogle } = useGoogleOAuth();
   const { signInWithApple } = useAppleOAuth();
   const [googleLoading, setGoogleLoading] = useState(false);

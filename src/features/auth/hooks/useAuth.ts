@@ -32,14 +32,12 @@ export function useLogin() {
   const { signIn, setActive, isLoaded } = useSignIn();
 
   const handleSignIn = async (params: { identifier: string; password: string }) => {
-    if (!isLoaded) return;
-
-    const result = await signIn.create({
+    const result = await signIn!.create({
       identifier: params.identifier,
       password: params.password,
     });
 
-    if (result.status === 'complete') {
+    if (result.status === 'complete' && setActive !== undefined) {
       await setActive({ session: result.createdSessionId });
       return result;
     }
@@ -50,6 +48,7 @@ export function useLogin() {
   return {
     signIn: handleSignIn,
     isLoading: !isLoaded,
+    isLoaded,
   };
 }
 
@@ -62,19 +61,17 @@ export function useRegister() {
     firstName?: string;
     lastName?: string;
   }) => {
-    if (!isLoaded) return;
-
-    const result = await signUp.create(params);
+    const result = await signUp!.create(params);
 
     // If email verification is required
     if (result.status === 'missing_requirements') {
       // Prepare email verification
-      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+      await signUp!.prepareEmailAddressVerification({ strategy: 'email_code' });
       return result;
     }
 
     // If sign up is complete
-    if (result.status === 'complete') {
+    if (result.status === 'complete' && setActive !== undefined) {
       await setActive({ session: result.createdSessionId });
       return result;
     }
@@ -85,6 +82,7 @@ export function useRegister() {
   return {
     signUp: handleSignUp,
     isLoading: !isLoaded,
+    isLoaded,
   };
 }
 
@@ -92,11 +90,9 @@ export function useVerifyEmail() {
   const { signUp, setActive, isLoaded } = useSignUp();
 
   const verifyEmail = async (code: string) => {
-    if (!isLoaded) return;
+    const result = await signUp!.attemptEmailAddressVerification({ code });
 
-    const result = await signUp.attemptEmailAddressVerification({ code });
-
-    if (result.status === 'complete') {
+    if (result.status === 'complete' && setActive !== undefined) {
       await setActive({ session: result.createdSessionId });
       return result;
     }
@@ -107,6 +103,7 @@ export function useVerifyEmail() {
   return {
     verifyEmail,
     isLoading: !isLoaded,
+    isLoaded,
   };
 }
 
@@ -114,9 +111,7 @@ export function useForgotPassword() {
   const { signIn, isLoaded } = useSignIn();
 
   const sendResetCode = async (emailAddress: string) => {
-    if (!isLoaded) return;
-
-    const result = await signIn.create({
+    const result = await signIn!.create({
       strategy: 'reset_password_email_code',
       identifier: emailAddress,
     });
@@ -127,6 +122,7 @@ export function useForgotPassword() {
   return {
     sendResetCode,
     isLoading: !isLoaded,
+    isLoaded,
   };
 }
 
@@ -134,15 +130,13 @@ export function useResetPassword() {
   const { signIn, setActive, isLoaded } = useSignIn();
 
   const resetPassword = async (code: string, newPassword: string) => {
-    if (!isLoaded) return;
-
-    const result = await signIn.attemptFirstFactor({
+    const result = await signIn!.attemptFirstFactor({
       strategy: 'reset_password_email_code',
       code,
       password: newPassword,
     });
 
-    if (result.status === 'complete') {
+    if (result.status === 'complete' && setActive !== undefined) {
       await setActive({ session: result.createdSessionId });
       return result;
     }
@@ -153,6 +147,7 @@ export function useResetPassword() {
   return {
     resetPassword,
     isLoading: !isLoaded,
+    isLoaded,
   };
 }
 
@@ -165,7 +160,7 @@ export function useGoogleOAuth() {
       redirectUrl: Linking.createURL(ROUTES.AUTH.LOGIN),
     });
 
-    if (createdSessionId && setActive) {
+    if (createdSessionId && setActive !== undefined) {
       await setActive({ session: createdSessionId });
     }
   }, [startOAuthFlow]);
@@ -181,7 +176,7 @@ export function useAppleOAuth() {
   const signInWithApple = useCallback(async () => {
     const { createdSessionId, setActive } = await startAppleAuthenticationFlow();
 
-    if (createdSessionId && setActive) {
+    if (createdSessionId && setActive !== undefined) {
       await setActive({ session: createdSessionId });
     }
   }, [startAppleAuthenticationFlow]);

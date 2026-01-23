@@ -7,7 +7,6 @@ const badgeVariants = {
     default: "bg-primary",
     secondary: "bg-secondary",
     success: "bg-green-600",
-    warning: "bg-yellow-600",
     destructive: "bg-destructive",
     outline: "border border-border bg-transparent",
   },

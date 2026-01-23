@@ -19,7 +19,7 @@ const textVariants = {
 export interface TextProps extends RNTextProps {
   variant?: keyof typeof textVariants;
   className?: string;
-  color?: 'primary' | 'secondary' | 'muted' | 'destructive' | 'success' | 'warning';
+  color?: 'primary' | 'secondary' | 'muted' | 'destructive' | 'success' ;
   weight?: 'normal' | 'medium' | 'semibold' | 'bold';
 }
 
@@ -29,7 +29,6 @@ const colorMap = {
   muted: 'text-muted-foreground',
   destructive: 'text-destructive',
   success: 'text-green-600',
-  warning: 'text-yellow-600',
 } as const;
 
 

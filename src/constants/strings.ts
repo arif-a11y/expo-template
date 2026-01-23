@@ -17,18 +17,31 @@ export const STRINGS = {
     INVALID_EMAIL: 'Please enter a valid email address',
     PASSWORD_MIN_LENGTH: 'Password must be at least 8 characters',
     REQUIRED_FIELD: 'This field is required',
+    SIGN_IN_FAILED: 'Failed to sign in',
+    SIGN_UP_FAILED: 'Failed to sign up',
+    SEND_CODE_FAILED: 'Failed to send reset code',
+    RESET_PASSWORD_FAILED: 'Failed to reset password',
+    VERIFICATION_FAILED: 'Invalid verification code',
   },
   HOME: {
     WELCOME: 'Welcome to Expo Template',
     SUBTITLE: 'A production-ready template with best practices',
   },
+  PROFILE: {
+    TITLE: 'Profile',
+    ACCOUNT_INFO: 'Account Information',
+    EMAIL_LABEL: 'Email',
+    NAME_LABEL: 'Name',
+  },
   AUTH: {
+    // Form Labels
     EMAIL: 'Email',
     PASSWORD: 'Password',
     CONFIRM_PASSWORD: 'Confirm Password',
     NAME: 'Full Name',
     VERIFICATION_CODE: 'Verification Code',
 
+    // Buttons
     LOGIN: 'Log In',
     REGISTER: 'Sign Up',
     LOGOUT: 'Log Out',
@@ -38,17 +51,35 @@ export const STRINGS = {
     VERIFY: 'Verify',
     CONTINUE_WITH_GOOGLE: 'Continue with Google',
     CONTINUE_WITH_APPLE: 'Continue with Apple',
+    BACK_TO_LOGIN: 'Back to Login',
+    CONTINUE_TO_RESET: 'Continue to Reset Password',
 
+    // Titles & Descriptions
     WELCOME_BACK: 'Welcome back',
+    SIGN_IN_SUBTITLE: 'Sign in to continue',
     CREATE_ACCOUNT: 'Create your account',
+    SIGN_UP_SUBTITLE: 'Sign up to get started',
     ALREADY_HAVE_ACCOUNT: 'Already have an account?',
     DONT_HAVE_ACCOUNT: "Don't have an account?",
     RESET_PASSWORD_TITLE: 'Reset your password',
     RESET_PASSWORD_DESC: 'Enter your email to receive a reset code',
+    RESET_PASSWORD_FORM_DESC: 'Enter the code from your email and create a new password',
     VERIFY_EMAIL_TITLE: 'Verify your email',
     VERIFY_EMAIL_DESC: 'Enter the code sent to your email',
+    CHECK_EMAIL_TITLE: 'Check your email',
+    CHECK_EMAIL_DESC: "We've sent a password reset code to your email address. Click the button below to reset your password.",
     OR_CONTINUE_WITH: 'Or continue with',
 
+    // Placeholders
+    PLACEHOLDER_EMAIL: 'you@example.com',
+    PLACEHOLDER_PASSWORD: 'Enter your password',
+    PLACEHOLDER_NAME: 'John Doe',
+    PLACEHOLDER_CREATE_PASSWORD: 'Create a password',
+    PLACEHOLDER_CONFIRM_PASSWORD: 'Confirm your password',
+    PLACEHOLDER_NEW_PASSWORD: 'Create a new password',
+    PLACEHOLDER_CODE: 'Enter 6-digit code',
+
+    // Validation Messages
     EMAIL_REQUIRED: 'Email is required',
     EMAIL_INVALID: 'Please enter a valid email address',
     PASSWORD_REQUIRED: 'Password is required',

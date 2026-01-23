@@ -255,9 +255,9 @@ const buttonVariants = {
       destructive: 'bg-destructive',
     },
     size: {
-      sm: 'px-3 py-2 min-h-[36px]',
-      md: 'px-4 py-3 min-h-[44px]',
-      lg: 'px-6 py-4 min-h-[52px]',
+      sm: 'px-3 py-2',
+      md: 'px-4 py-3',
+      lg: 'px-6 py-4',
     },
   },
 };
@@ -410,7 +410,7 @@ const gridItemVariants = {
 };
 
 export function ResponsiveGrid() {
-  const { isTablet } = useResponsive();
+  
   const layout = isTablet ? 'tablet' : 'phone';
 
   return (

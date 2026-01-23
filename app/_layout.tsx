@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
@@ -29,16 +30,18 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider publishableKey={ENV.CLERK_PUBLISHABLE_KEY}>
-      <QueryProvider>
-        <ThemeProvider>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          />
-        </ThemeProvider>
-      </QueryProvider>
-    </ClerkProvider>
+    <SafeAreaProvider>
+      <ClerkProvider publishableKey={ENV.CLERK_PUBLISHABLE_KEY}>
+        <QueryProvider>
+          <ThemeProvider>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+              }}
+            />
+          </ThemeProvider>
+        </QueryProvider>
+      </ClerkProvider>
+    </SafeAreaProvider>
   );
 }

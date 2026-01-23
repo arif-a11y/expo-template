@@ -1,17 +1,16 @@
 import { View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSignIn } from '@clerk/clerk-expo';
 import { Text } from '@/components/ui/Text';
 import { Button } from '@/components/ui/Button';
-import { Loader } from '@/components/ui/Loader';
-import { FormField } from '@/features/auth/components';
+import { FormField } from './FormField';
 import { resetPasswordSchema, ResetPasswordFormData } from '../schemas/auth.schema';
+import { useResetPassword } from '../hooks/useAuth';
 import { STRINGS } from '@/constants';
 
 export function ResetPasswordForm() {
-  const { signIn, setActive, isLoaded } = useSignIn();
-  const { control, handleSubmit, setError, formState: { isSubmitting, errors } } = useForm<ResetPasswordFormData>({
+  const { resetPassword, isLoaded } = useResetPassword();
+  const { control, handleSubmit, setError, formState: { errors } } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       code: '',
@@ -22,18 +21,10 @@ export function ResetPasswordForm() {
 
   const onSubmit = async (data: ResetPasswordFormData) => {
     try {
-      const result = await signIn!.attemptFirstFactor({
-        strategy: 'reset_password_email_code',
-        code: data.code,
-        password: data.password,
-      });
-
-      if (result.status === 'complete') {
-        await setActive!({ session: result.createdSessionId });
-      }
+      await resetPassword(data.code, data.password);
     } catch (err: any) {
       setError('root', {
-        message: err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || 'Failed to reset password',
+        message: err?.errors?.[0]?.longMessage || err?.errors?.[0]?.message || STRINGS.ERRORS.RESET_PASSWORD_FAILED,
       });
     }
   };
@@ -45,7 +36,7 @@ export function ResetPasswordForm() {
           {STRINGS.AUTH.RESET_PASSWORD}
         </Text>
         <Text variant="body" className="text-muted-foreground">
-          Enter the code from your email and create a new password
+          {STRINGS.AUTH.RESET_PASSWORD_FORM_DESC}
         </Text>
       </View>
 
@@ -54,7 +45,7 @@ export function ResetPasswordForm() {
           control={control}
           name="code"
           label={STRINGS.AUTH.VERIFICATION_CODE}
-          placeholder="Enter 6-digit code"
+          placeholder={STRINGS.AUTH.PLACEHOLDER_CODE}
           keyboardType="number-pad"
           autoCapitalize="none"
         />
@@ -63,7 +54,7 @@ export function ResetPasswordForm() {
           control={control}
           name="password"
           label={STRINGS.AUTH.PASSWORD}
-          placeholder="Create a new password"
+          placeholder={STRINGS.AUTH.PLACEHOLDER_NEW_PASSWORD}
           autoCapitalize="none"
           autoComplete="password-new"
           isPassword
@@ -73,7 +64,7 @@ export function ResetPasswordForm() {
           control={control}
           name="confirmPassword"
           label={STRINGS.AUTH.CONFIRM_PASSWORD}
-          placeholder="Confirm your password"
+          placeholder={STRINGS.AUTH.PLACEHOLDER_CONFIRM_PASSWORD}
           autoCapitalize="none"
           autoComplete="password-new"
           isPassword
@@ -92,15 +83,11 @@ export function ResetPasswordForm() {
         variant="primary"
         size="lg"
         onPress={handleSubmit(onSubmit)}
-        disabled={!isLoaded || isSubmitting}
+        disabled={!isLoaded}
       >
-        {isSubmitting ? (
-          <Loader size="sm" />
-        ) : (
-          <Text className="text-primary-foreground font-inter-semibold">
-            {STRINGS.AUTH.RESET_PASSWORD}
-          </Text>
-        )}
+        <Text className="text-primary-foreground font-inter-semibold">
+          {STRINGS.AUTH.RESET_PASSWORD}
+        </Text>
       </Button>
     </View>
   );
