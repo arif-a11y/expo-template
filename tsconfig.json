@@ -5,34 +5,34 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "./*"
       ],
       "@components/*": [
-        "./src/components/*"
+        "./components/*"
       ],
       "@features/*": [
-        "./src/features/*"
+        "./features/*"
       ],
       "@hooks/*": [
-        "./src/hooks/*"
+        "./hooks/*"
       ],
       "@services/*": [
-        "./src/services/*"
+        "./services/*"
       ],
       "@providers/*": [
-        "./src/providers/*"
+        "./providers/*"
       ],
       "@constants/*": [
-        "./src/constants/*"
+        "./constants/*"
       ],
       "@lib/*": [
-        "./src/lib/*"
+        "./lib/*"
       ],
       "@types/*": [
-        "./src/types/*"
+        "./types/*"
       ],
       "@config/*": [
-        "./src/config/*"
+        "./config/*"
       ],
       "@assets/*": [
         "./assets/*"

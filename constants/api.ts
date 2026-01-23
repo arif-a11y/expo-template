@@ -8,7 +8,6 @@ export const API_ENDPOINTS = {
     RESET_PASSWORD: '/auth/reset-password',
     SEND_VERIFICATION: '/auth/send-verification-code',
   },
-
   // Example: USERS
   // USERS: {
   //   LIST: '/users',
